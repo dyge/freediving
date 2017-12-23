@@ -1,4 +1,25 @@
 {% extends "base.html" %}
+{% load i18n %}
+{% load leaflet_tags %}
+{% block head %}
+{% leaflet_js %}
+{% leaflet_css %}
+<style>
+  .leaflet-container{
+    width: 600px;
+    height:700px;
+  }
+</style>
+{% endblock %}
 {% block body %}
-<h1>Index</h1>
+<h1>{% trans "Index"%}</h1>
+<div class="leaflet-container">
+  {% leaflet_map "main" callback="main_map_init" %}
+  <script type="text/javascript">
+  function main_map_init (map, options) {
+    // Use Leaflet API here
+  }
+  </script>
+</div>
+
 {% endblock %}
