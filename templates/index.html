@@ -1,25 +1,63 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load leaflet_tags %}
+{% load staticfiles %}
 {% block head %}
 {% leaflet_js %}
 {% leaflet_css %}
 <style>
-  .leaflet-container{
+  #karte{
+    height: 600px;
     width: 600px;
-    height:700px;
+  }
+  .mydiv{
+    background-color: #2B2D42;
+    margin-top: 20px;
+    padding: 10px;
+  }
+  p{
+    color: #EDF2F4;
   }
 </style>
 {% endblock %}
 {% block body %}
-<h1>{% trans "Index"%}</h1>
-<div class="leaflet-container">
-  {% leaflet_map "main" callback="main_map_init" %}
-  <script type="text/javascript">
-  function main_map_init (map, options) {
-    // Use Leaflet API here
-  }
-  </script>
-</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-7 col-md-7 col-lg-7 col-xl-7">
+      <h1>{% trans "Index"%}</h1>
+      <div id="karte"></div>
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5 col-xl-5">
 
+      <div class="mydiv">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">type</button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Shop</a>
+            <a class="dropdown-item" href="#">Event</a>
+            <a class="dropdown-item" href="#">Verein</a>
+          </div>
+        </div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Ort" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </div>
+
+      {% if user.is_authenticated %}
+        <div class="mydiv">
+          <p><a href="{% url 'spots:newshop' %}"><img src="{% static "images/plus.png" %}" width="10" height="10" alt="Not found!"> Shop</a></p>
+          <p><a href="{% url 'spots:newverein' %}"><img src="{% static "images/plus.png" %}" width="10" height="10" alt="Not found!"> Verein</a></p>
+          <p><a href="{% url 'spots:newevent' %}"><img src="{% static "images/plus.png" %}" width="10" height="10" alt="Not found!"> Event</a></p>
+        </div>
+      {% endif %}
+      <div class="mydiv">
+        <p>Events</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  var map = L.map('karte').setView([48,11],10);
+  L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+  L.marker([50.5, 30.5]).addTo(map);
+</script>
 {% endblock %}

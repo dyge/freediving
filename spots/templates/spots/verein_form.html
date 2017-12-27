@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block body %}
+<div class="container">
+  <form method="POST" action="{% url 'spots:newverein' %}" id="vereinForm">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit">Save</button>
+  </form>
+</div>
+{% endblock %}

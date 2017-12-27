@@ -4,22 +4,25 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Freediving</title>
     {% block head %}
     {% endblock %}
+    <link rel="stylesheet" href="{% static "css/master.css" %}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'home' %}">Freediving</a>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #8D99AE;">
+      <a class="navbar-brand topic" href="{% url 'home' %}"><img src="{% static "images/logo.png" %}" width="50" height="50" alt="Not found!">Freediving</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="#">Shops</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Events/Training</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Vereine</a></li>
+            {% if user.is_authenticated %}
+              <li class="nav-item"><a href="{% url 'spots:newbuddy' %}" class="btn btn-simple nav-link">Buddy</a></li>
+            {% endif %}
           </ul>
           <ul class="navbar-nav ml-auto">
             <form action="{% url 'set_language' %}" method="post">
@@ -28,17 +31,13 @@
                 <select name="language">
                     {% get_current_language as LANGUAGE_CODE %}
                     {% get_available_languages as lang %}
-                    <option value="{{ lang.0.0 }}" {% if lang.0.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                        {{ lang.0.1 }}
-                    </option>
-                    <option value="{{ lang.1.0 }}" {% if lang.1.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                        {{ lang.1.1 }}
-                    </option>
+                    <option value="{{ lang.0.0 }}" {% if lang.0.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>English</option>
+                    <option value="{{ lang.1.0 }}" {% if lang.1.0 == LANGUAGE_CODE %} selected="selected"{% endif %}>Deutsch</option>
                 </select>
-                <input type="submit" value="Go" />
+                <button type="submit" class="btn btn-light lan" name="button"><img src="{% static "images/check.png" %}" width="20" height="20" alt="Not found!"></button>
             </form>
             {% if user.is_authenticated %}
-                  <li><a href="{% url 'accounts:logout' %}" class="btn btn-simple">Log out</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout' %}" class="btn btn-simple">Log out</a></li>
             {% else %}
               <li class="nav-item"><a class="nav-link" href="{% url 'accounts:signup' %}">Sign up</a></li>
               <li class="nav-item"><a class="btn btn-simple" href="{% url 'accounts:login' %}">Login</a></li>
@@ -46,6 +45,7 @@
           </ul>
       </div>
     </nav>
+    <i class="fas fa-check">
     {% block body %}
     {% endblock %}
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

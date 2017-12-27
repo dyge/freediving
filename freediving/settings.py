@@ -38,16 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djgeojson',
     'leaflet',
     'bootstrap4',
     'bootstrap3',
     'accounts',
+    'spots',
+    'jquery',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware', #neu
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,8 +130,8 @@ LANGUAGES = (   #neuer Abschnitt
 
 LEAFLET_CONFIG = {
     'DEFAULT_CENTER': (6.0, 45.0),
-    'DEFAULT_ZOOM': 3,
-    'MIN_ZOOM': 1,
+    'DEFAULT_ZOOM': 1,  #3
+    'MIN_ZOOM': 1,  #2
     'MAX_ZOOM': 20,
     'RESET_VIEW': False,
 }
@@ -139,9 +142,9 @@ LEAFLET_CONFIG = {
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-LOCALE_PATHS = (    #neuer Abschnitt
+LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-LOGIN_REDIRECT_URL = "test"
+LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "thanks"

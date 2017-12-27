@@ -21,9 +21,9 @@ from django.conf.urls.i18n import i18n_patterns
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r"^$", views.HomePage.as_view(), name="home"),
+    url(r'^spots/',include("spots.urls")),
     url(r"^accounts/", include("accounts.urls", namespace="accounts")),
     url(r"^accounts/", include("django.contrib.auth.urls")),
     url(r"^thanks/$", views.ThanksPage.as_view(), name="thanks"),
-    url(r"^test/$", views.TestPage.as_view(), name="test"),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
